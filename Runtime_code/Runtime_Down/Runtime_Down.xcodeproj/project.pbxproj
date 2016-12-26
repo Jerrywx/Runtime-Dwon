@@ -13,6 +13,7 @@
 		30378ADD1E11228D002D75B7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30378ADB1E11228D002D75B7 /* Main.storyboard */; };
 		30378ADF1E11228D002D75B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30378ADE1E11228D002D75B7 /* Assets.xcassets */; };
 		30378AE21E11228D002D75B7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30378AE01E11228D002D75B7 /* LaunchScreen.storyboard */; };
+		30378AEB1E112921002D75B7 /* TestClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 30378AEA1E112921002D75B7 /* TestClass.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		30378ADE1E11228D002D75B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		30378AE11E11228D002D75B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		30378AE31E11228D002D75B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		30378AE91E112921002D75B7 /* TestClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestClass.h; sourceTree = "<group>"; };
+		30378AEA1E112921002D75B7 /* TestClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestClass.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,7 +46,6 @@
 			isa = PBXGroup;
 			children = (
 				30378AD11E11228D002D75B7 /* Runtime_Down */,
-				30378AD01E11228D002D75B7 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -53,6 +55,7 @@
 				30378ACF1E11228D002D75B7 /* Runtime_Down.app */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		30378AD11E11228D002D75B7 /* Runtime_Down */ = {
@@ -62,11 +65,10 @@
 				30378AD61E11228D002D75B7 /* AppDelegate.m */,
 				30378AD81E11228D002D75B7 /* ViewController.h */,
 				30378AD91E11228D002D75B7 /* ViewController.m */,
-				30378ADB1E11228D002D75B7 /* Main.storyboard */,
-				30378ADE1E11228D002D75B7 /* Assets.xcassets */,
-				30378AE01E11228D002D75B7 /* LaunchScreen.storyboard */,
-				30378AE31E11228D002D75B7 /* Info.plist */,
 				30378AD21E11228D002D75B7 /* Supporting Files */,
+				30378AE91E112921002D75B7 /* TestClass.h */,
+				30378AEA1E112921002D75B7 /* TestClass.m */,
+				30378AD01E11228D002D75B7 /* Products */,
 			);
 			path = Runtime_Down;
 			sourceTree = "<group>";
@@ -74,6 +76,10 @@
 		30378AD21E11228D002D75B7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				30378ADB1E11228D002D75B7 /* Main.storyboard */,
+				30378ADE1E11228D002D75B7 /* Assets.xcassets */,
+				30378AE01E11228D002D75B7 /* LaunchScreen.storyboard */,
+				30378AE31E11228D002D75B7 /* Info.plist */,
 				30378AD31E11228D002D75B7 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -150,6 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30378AEB1E112921002D75B7 /* TestClass.m in Sources */,
 				30378ADA1E11228D002D75B7 /* ViewController.m in Sources */,
 				30378AD71E11228D002D75B7 /* AppDelegate.m in Sources */,
 				30378AD41E11228D002D75B7 /* main.m in Sources */,
@@ -309,6 +316,7 @@
 				30378AE81E11228D002D75B7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
