@@ -32,6 +32,11 @@ void test(id self, SEL _cmd) {
 	Method method = class_getClassMethod([TestClass class], @selector(printClass));
 	
 	IMP dzn_newImplementation = method_setImplementation(method, (IMP)test);
+	NSLog(@"==========");
+	[TestClass printClass];
+	NSLog(@"==========");
+	dzn_newImplementation();
+	NSLog(@"==========");
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

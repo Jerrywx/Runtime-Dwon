@@ -1,13 +1,13 @@
 //
-//  jr_runtime.h
+//  simple_runtime.h
 //  Runtime_Down
 //
 //  Created by 王潇 on 2016/12/27.
 //  Copyright © 2016年 王潇. All rights reserved.
 //
 
-#ifndef jr_runtime_h
-#define jr_runtime_h
+#ifndef simple_runtime_h
+#define simple_runtime_h
 
 
 /*
@@ -395,97 +395,30 @@ OBJC_EXPORT Class *objc_copyClassList(unsigned int *outCount)
 OBJC_AVAILABLE(10.7, 3.1, 9.0, 1.0);
 
 
-/* Working with Classes */
+/* --------------------------------------------------------------------------- */
+/* Working with Classes														   */
+/* --------------------------------------------------------------------------- */
 
-/**
- * Returns the name of a class.
- *
- * @param cls A class object.
- *
- * @return The name of the class, or the empty string if \e cls is \c Nil.
- */
-OBJC_EXPORT const char *class_getName(Class cls)
-OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);
+/// 返回类的名字
+OBJC_EXPORT const char *class_getName(Class cls);
 
-/**
- * Returns a Boolean value that indicates whether a class object is a metaclass.
- *
- * @param cls A class object.
- *
- * @return \c YES if \e cls is a metaclass, \c NO if \e cls is a non-meta class,
- *  \c NO if \e cls is \c Nil.
- */
-OBJC_EXPORT BOOL class_isMetaClass(Class cls)
-OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);
+/// 判断类是否是原类
+OBJC_EXPORT BOOL class_isMetaClass(Class cls);
 
-/**
- * Returns the superclass of a class.
- *
- * @param cls A class object.
- *
- * @return The superclass of the class, or \c Nil if
- *  \e cls is a root class, or \c Nil if \e cls is \c Nil.
- *
- * @note You should usually use \c NSObject's \c superclass method instead of this function.
- */
-OBJC_EXPORT Class class_getSuperclass(Class cls)
-OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);
+/// 获取父类
+OBJC_EXPORT Class class_getSuperclass(Class cls);
 
-/**
- * Sets the superclass of a given class.
- *
- * @param cls The class whose superclass you want to set.
- * @param newSuper The new superclass for cls.
- *
- * @return The old superclass for cls.
- *
- * @warning You should not use this function.
- */
-OBJC_EXPORT Class class_setSuperclass(Class cls, Class newSuper)
-__OSX_DEPRECATED(10.5, 10.5, "not recommended")
-__IOS_DEPRECATED(2.0, 2.0, "not recommended")
-__TVOS_DEPRECATED(9.0, 9.0, "not recommended")
-__WATCHOS_DEPRECATED(1.0, 1.0, "not recommended");
+/// 设置类的父类	已经弃用, 不推荐使用
+OBJC_EXPORT Class class_setSuperclass(Class cls, Class newSuper);
 
-/**
- * Returns the version number of a class definition.
- *
- * @param cls A pointer to a \c Class data structure. Pass
- *  the class definition for which you wish to obtain the version.
- *
- * @return An integer indicating the version number of the class definition.
- *
- * @see class_setVersion
- */
-OBJC_EXPORT int class_getVersion(Class cls)
-OBJC_AVAILABLE(10.0, 2.0, 9.0, 1.0);
+/// 获取类定义的版本
+OBJC_EXPORT int class_getVersion(Class cls);
 
-/**
- * Sets the version number of a class definition.
- *
- * @param cls A pointer to an Class data structure.
- *  Pass the class definition for which you wish to set the version.
- * @param version An integer. Pass the new version number of the class definition.
- *
- * @note You can use the version number of the class definition to provide versioning of the
- *  interface that your class represents to other classes. This is especially useful for object
- *  serialization (that is, archiving of the object in a flattened form), where it is important to
- *  recognize changes to the layout of the instance variables in different class-definition versions.
- * @note Classes derived from the Foundation framework \c NSObject class can set the class-definition
- *  version number using the \c setVersion: class method, which is implemented using the \c class_setVersion function.
- */
-OBJC_EXPORT void class_setVersion(Class cls, int version)
-OBJC_AVAILABLE(10.0, 2.0, 9.0, 1.0);
+/// 设置类定义的版本
+OBJC_EXPORT void class_setVersion(Class cls, int version);
 
-/**
- * Returns the size of instances of a class.
- *
- * @param cls A class object.
- *
- * @return The size in bytes of instances of the class \e cls, or \c 0 if \e cls is \c Nil.
- */
-OBJC_EXPORT size_t class_getInstanceSize(Class cls)
-OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);
+/// 获取类实例的大小
+OBJC_EXPORT size_t class_getInstanceSize(Class cls);
 
 /**
  * Returns the \c Ivar for a specified instance variable of a given class.
@@ -526,37 +459,11 @@ OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);
 OBJC_EXPORT Ivar *class_copyIvarList(Class cls, unsigned int *outCount)
 OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);
 
-/**
- * Returns a specified instance method for a given class.
- *
- * @param cls The class you want to inspect.
- * @param name The selector of the method you want to retrieve.
- *
- * @return The method that corresponds to the implementation of the selector specified by
- *  \e name for the class specified by \e cls, or \c NULL if the specified class or its
- *  superclasses do not contain an instance method with the specified selector.
- *
- * @note This function searches superclasses for implementations, whereas \c class_copyMethodList does not.
- */
-OBJC_EXPORT Method class_getInstanceMethod(Class cls, SEL name)
-OBJC_AVAILABLE(10.0, 2.0, 9.0, 1.0);
+/// 获取实例方法
+OBJC_EXPORT Method class_getInstanceMethod(Class cls, SEL name);
 
-/**
- * Returns a pointer to the data structure describing a given class method for a given class.
- * 返回一个指向结构体的指针, 用于描述给定类的类方法
- * @param cls A pointer to a class definition. Pass the class that contains the method you want to retrieve.
- *		  cla 一个指向类定义的指针. 传入你想获取的方法所在的类。
- * @param name A pointer of type \c SEL. Pass the selector of the method you want to retrieve.
- *		  name 指向方法的指针。传入你想要获取的方法的 selector
- * @return A pointer to the \c Method data structure that corresponds to the implementation of the
- *  selector specified by aSelector for the class specified by aClass, or NULL if the specified
- *  class or its superclasses do not contain an instance method with the specified selector.
- *
- * @note Note that this function searches superclasses for implementations,
- *  whereas \c class_copyMethodList does not.
- */
-OBJC_EXPORT Method class_getClassMethod(Class cls, SEL name)
-OBJC_AVAILABLE(10.0, 2.0, 9.0, 1.0);
+/// 获取类方法
+OBJC_EXPORT Method class_getClassMethod(Class cls, SEL name);
 
 /**
  * Returns the function pointer that would be called if a
@@ -1029,13 +936,11 @@ OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);
 
 /**
  * Sets the implementation of a method.
- * 重新设置某方法的实现
+ *
  * @param m The method for which to set an implementation.
- *		  想要设置实现的方法
  * @param imp The implemention to set to this method.
- *		  设置方法的实现
+ *
  * @return The previous implementation of the method.
- *		  返回之前方法的实现
  */
 OBJC_EXPORT IMP method_setImplementation(Method m, IMP imp)
 OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);
@@ -1864,7 +1769,4 @@ OBJC_EXPORT void (*_error)(id, const char *, va_list)        OBJC2_UNAVAILABLE;
 
 
 
-
-
-
-#endif /* jr_runtime_h */
+#endif /* simple_runtime_h */
