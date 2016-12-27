@@ -23,7 +23,8 @@ void test(id self, SEL _cmd) {
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	
+	self.view.backgroundColor = [UIColor whiteColor];
 
 	/// 修改对象的方法
 //	Method method = class_getInstanceMethod([TestClass class], @selector(printSelf));
