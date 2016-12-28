@@ -10,6 +10,16 @@
 
 @interface TestClass : NSObject
 
+@property (nonatomic, strong) NSString	*attr;
+
+@property (nonatomic, strong) NSNumber	*number;
+
+@property (nonatomic, assign) NSInteger	numb1;
+
+@property (nonatomic, assign) NSInteger	numb2;
+
+@property (nonatomic, assign) NSInteger	numb3;
+
 - (void)printSelf;
 
 + (void)printClass;

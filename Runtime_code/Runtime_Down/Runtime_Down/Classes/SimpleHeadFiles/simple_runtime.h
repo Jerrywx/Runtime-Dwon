@@ -9,45 +9,6 @@
 #ifndef simple_runtime_h
 #define simple_runtime_h
 
-
-/*
- * Copyright (c) 1999-2007 Apple Inc.  All Rights Reserved.
- *
- * @APPLE_LICENSE_HEADER_START@
- *
- * This file contains Original Code and/or Modifications of Original Code
- * as defined in and that are subject to the Apple Public Source License
- * Version 2.0 (the 'License'). You may not use this file except in
- * compliance with the License. Please obtain a copy of the License at
- * http://www.opensource.apple.com/apsl/ and read it before using this
- * file.
- *
- * The Original Code and all software distributed under the License are
- * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER
- * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
- * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.
- * Please see the License for the specific language governing rights and
- * limitations under the License.
- *
- * @APPLE_LICENSE_HEADER_END@
- */
-
-#ifndef _OBJC_RUNTIME_H
-#define _OBJC_RUNTIME_H
-
-#include <objc/objc.h>
-#include <stdarg.h>
-#include <stdint.h>
-#include <stddef.h>
-#include <Availability.h>
-#include <TargetConditionals.h>
-
-#if TARGET_OS_MAC
-#include <sys/types.h>
-#endif
-
-
 /* Types */
 
 #if !OBJC_TYPES_DEFINED
@@ -420,42 +381,13 @@ OBJC_EXPORT void class_setVersion(Class cls, int version);
 /// 获取类实例的大小
 OBJC_EXPORT size_t class_getInstanceSize(Class cls);
 
-/**
- * Returns the \c Ivar for a specified instance variable of a given class.
- *
- * @param cls The class whose instance variable you wish to obtain.
- * @param name The name of the instance variable definition to obtain.
- *
- * @return A pointer to an \c Ivar data structure containing information about
- *  the instance variable specified by \e name.
- */
-OBJC_EXPORT Ivar class_getInstanceVariable(Class cls, const char *name)
-OBJC_AVAILABLE(10.0, 2.0, 9.0, 1.0);
+/// 获取对象的属性
+OBJC_EXPORT Ivar class_getInstanceVariable(Class cls, const char *name);
 
-/**
- * Returns the Ivar for a specified class variable of a given class.
- *
- * @param cls The class definition whose class variable you wish to obtain.
- * @param name The name of the class variable definition to obtain.
- *
- * @return A pointer to an \c Ivar data structure containing information about the class variable specified by \e name.
- */
-OBJC_EXPORT Ivar class_getClassVariable(Class cls, const char *name)
-OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);
+/// 返回指定类的 Ivar
+OBJC_EXPORT Ivar class_getClassVariable(Class cls, const char *name);
 
-/**
- * Describes the instance variables declared by a class.
- *
- * @param cls The class to inspect.
- * @param outCount On return, contains the length of the returned array.
- *  If outCount is NULL, the length is not returned.
- *
- * @return An array of pointers of type Ivar describing the instance variables declared by the class.
- *  Any instance variables declared by superclasses are not included. The array contains *outCount
- *  pointers followed by a NULL terminator. You must free the array with free().
- *
- *  If the class declares no instance variables, or cls is Nil, NULL is returned and *outCount is 0.
- */
+/// 获取属性列表
 OBJC_EXPORT Ivar *class_copyIvarList(Class cls, unsigned int *outCount)
 OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);
 
@@ -837,19 +769,12 @@ OBJC_EXPORT void objc_disposeClassPair(Class cls)
 OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);
 
 
-/* Working with Methods */
+/* --------------------------------------------------------------------------- */
+/* Working with Methods														   */
+/* --------------------------------------------------------------------------- */
 
-/**
- * Returns the name of a method.
- *
- * @param m The method to inspect.
- *
- * @return A pointer of type SEL.
- *
- * @note To get the method name as a C string, call \c sel_getName(method_getName(method)).
- */
-OBJC_EXPORT SEL method_getName(Method m)
-OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);
+/// 返回方法名
+OBJC_EXPORT SEL method_getName(Method m);
 
 /**
  * Returns the implementation of a method.
@@ -963,55 +888,26 @@ OBJC_EXPORT void method_exchangeImplementations(Method m1, Method m2)
 OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);
 
 
-/* Working with Instance Variables */
+/* --------------------------------------------------------------------------- */
+/* Working with Instance Variables											   */
+/* --------------------------------------------------------------------------- */
 
-/**
- * Returns the name of an instance variable.
- *
- * @param v The instance variable you want to enquire about.
- *
- * @return A C string containing the instance variable's name.
- */
-OBJC_EXPORT const char *ivar_getName(Ivar v)
-OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);
+/// 获取实例变量名
+OBJC_EXPORT const char *ivar_getName(Ivar v);
 
-/**
- * Returns the type string of an instance variable.
- *
- * @param v The instance variable you want to enquire about.
- *
- * @return A C string containing the instance variable's type encoding.
- *
- * @note For possible values, see Objective-C Runtime Programming Guide > Type Encodings.
- */
-OBJC_EXPORT const char *ivar_getTypeEncoding(Ivar v)
-OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);
+/// 获取实例变量类型名
+OBJC_EXPORT const char *ivar_getTypeEncoding(Ivar v);
 
-/**
- * Returns the offset of an instance variable.
- *
- * @param v The instance variable you want to enquire about.
- *
- * @return The offset of \e v.
- *
- * @note For instance variables of type \c id or other object types, call \c object_getIvar
- *  and \c object_setIvar instead of using this offset to access the instance variable data directly.
- */
-OBJC_EXPORT ptrdiff_t ivar_getOffset(Ivar v)
-OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);
+/// 获取实例属性偏移量
+OBJC_EXPORT ptrdiff_t ivar_getOffset(Ivar v);
 
 
-/* Working with Properties */
+/* --------------------------------------------------------------------------- */
+/* Working with Properties													   */
+/* --------------------------------------------------------------------------- */
 
-/**
- * Returns the name of a property.
- *
- * @param property The property you want to inquire about.
- *
- * @return A C string containing the property's name.
- */
-OBJC_EXPORT const char *property_getName(objc_property_t property)
-OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);
+/// 返回属性名
+OBJC_EXPORT const char *property_getName(objc_property_t property);
 
 /**
  * Returns the attribute string of a property.
@@ -1049,7 +945,9 @@ OBJC_EXPORT char *property_copyAttributeValue(objc_property_t property, const ch
 OBJC_AVAILABLE(10.7, 4.3, 9.0, 1.0);
 
 
-/* Working with Protocols */
+/* --------------------------------------------------------------------------- */
+/* Working with Protocols													   */
+/* --------------------------------------------------------------------------- */
 
 /**
  * Returns a specified protocol.
@@ -1304,7 +1202,9 @@ OBJC_EXPORT const char **objc_copyClassNamesForImage(const char *image,
 OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);
 
 
-/* Working with Selectors */
+/* --------------------------------------------------------------------------- */
+/* Working with Selectors													   */
+/* --------------------------------------------------------------------------- */
 
 /**
  * Returns the name of the method specified by a given selector.
@@ -1360,7 +1260,9 @@ OBJC_EXPORT BOOL sel_isEqual(SEL lhs, SEL rhs)
 OBJC_AVAILABLE(10.5, 2.0, 9.0, 1.0);
 
 
-/* Objective-C Language Features */
+/* --------------------------------------------------------------------------- */
+/* Objective-C Language Features											   */
+/* --------------------------------------------------------------------------- */
 
 /**
  * This function is inserted by the compiler when a mutation

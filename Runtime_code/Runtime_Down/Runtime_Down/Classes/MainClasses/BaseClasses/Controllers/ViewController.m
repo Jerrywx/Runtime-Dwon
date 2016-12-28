@@ -46,6 +46,4 @@ void test(id self, SEL _cmd) {
 	[TestClass printClass];
 }
 
-
-
 @end

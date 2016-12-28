@@ -29,7 +29,9 @@
 //	[self jr_class_getSuperclass];
 //	[self jr_class_setSuperclass];
 //	[self jr_class_getVersion];
-	[self jr_class_getInstanceSize];
+//	[self jr_class_getInstanceSize];
+//	[self jr_class_getInstanceVariable2];
+	[self jr_class_copyIvarList];
 }
 
 #pragma mark - Code Sample
@@ -100,6 +102,57 @@
 	
 	NSLog(@"===== %zu  %zu   %zu", size1, size2, size3);
 }
+
+/// class_getInstanceVariable	获取对象属性
+- (void)jr_class_getInstanceVariable {
+	
+	TestClass *test = [TestClass new];
+	test.attr = @"This is a Attr";
+
+	Ivar ivar = class_getInstanceVariable([TestClass class], "_attr");
+	NSString * str1 = object_getIvar(test, ivar);
+	NSLog(@"属性: %@", str1);
+}
+
+/// class_getInstanceVariable
+- (void)jr_class_getInstanceVariable2 {
+	
+	TestClass *test = [TestClass new];
+	test.number = [NSNumber numberWithInt:123];
+	
+	Ivar ivar = class_getInstanceVariable([TestClass class], "_number");
+	NSString *num = object_getIvar(test, ivar);
+	NSLog(@"属性: %@", num);
+}
+
+/// class_copyIvarList		获取属性列表
+- (void)jr_class_copyIvarList {
+	
+	unsigned int count = 0;
+	Ivar *ivarList = class_copyIvarList([TestClass class], &count);
+	
+	for (int i=0; i<count; i++) {
+		Ivar ivar = ivarList[i];
+		const char *name = ivar_getName(ivar);
+		const char *type = ivar_getTypeEncoding(ivar);
+		NSString *aName  = [NSString stringWithUTF8String:name];
+		NSString *aType  = [NSString stringWithUTF8String:type];
+		
+		ptrdiff_t offset = ivar_getOffset(ivar);
+		NSLog(@"参数:%@ - %@ --- %td", aName, aType, offset);
+	}
+	
+}
+
+
+
+
+
+- (void)class_getClassVariable:(Class)class name:(const char *)name {
+	Ivar ivar = class_getClassVariable(class, name);
+//	NSLog(@"%s%s%s",__func__,[self ivar_getTypeEncoding:ivar],[self ivar_getName:ivar]);
+}
+
 
 @end
 
